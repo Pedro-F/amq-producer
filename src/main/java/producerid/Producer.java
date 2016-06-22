@@ -6,6 +6,7 @@ import javax.jms.Destination;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.Topic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -32,7 +33,10 @@ public class Producer {
 	//Variables Globales
 	Connection conn = null;
 	Session session = null;
-	MessageProducer producer = null;
+//	MessageProducer producer = null;
+	
+	private Topic topic;
+    private MessageProducer publisher;
 	
 	//long contador = 0;
 	
@@ -95,11 +99,16 @@ public class Producer {
 			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             // Create the destination (Topic or Queue)
-            Destination destination = session.createQueue("TEST.MECCANO");
+//            Destination destination = session.createQueue("TEST.MECCANO");
+            
+            
+            topic = session.createTopic("VirtualTopic.PruebaAlex");
+            publisher = session.createProducer(topic);
+            publisher.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
             // Create a MessageProducer from the Session to the Topic or Queue
-            producer = session.createProducer(destination);
-            producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+//            producer = session.createProducer(destination);
+//            producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		
 		 }
 	    catch (Exception e) {
@@ -142,7 +151,8 @@ public class Producer {
             // Tell the producer to send the message
             System.out.println(logMessage);
             
-            producer.send(message);
+//            producer.send(message);
+            publisher.send(message);
              
         }
         catch (Exception e) {
