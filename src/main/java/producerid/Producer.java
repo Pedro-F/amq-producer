@@ -85,7 +85,7 @@ public class Producer {
 		finally{		
 		}
 		
-		return "<strong>Productor</strong> <br>Listo para enviar mensajes ...</br>";
+		return "<strong>Productor</strong> <br>Listo para enviar mensajes .</br>";
 	}
 
 	
