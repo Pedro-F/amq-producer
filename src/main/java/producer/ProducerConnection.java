@@ -1,4 +1,4 @@
-package producerid;
+package producer;
 
 import javax.jms.Connection;
 
