@@ -90,7 +90,7 @@ public class Producer {
 			// Create a Session
 			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            topic = session.createTopic("VirtualTopic.PruebaAlex");
+            topic = session.createTopic("VirtualTopic.AMQTopic");
             publisher = session.createProducer(topic);
             publisher.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 

@@ -16,7 +16,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 		try {
             
         	// Create a ConnectionFactory
-            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://cola-amq-amq-tcp:61616");
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://eap-app-amq-tcp:61616");
 
             // Create a Connection
             connection = connectionFactory.createConnection("user","password");
