@@ -2,7 +2,6 @@ package producer;
 
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
-import javax.jms.Destination;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -19,32 +18,27 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
-@RestController
-@EnableAutoConfiguration
-@EnableJms
 /**
  * Clase que produce una entrada en la cola JBoss EAP AMQ
  * @author pedro.alonso.garcia
  *
  */
+@RestController
+@EnableAutoConfiguration
+@EnableJms
 public class Producer {
 	
-	
-	//Variables Globales
 	Connection conn = null;
 	Session session = null;
-//	MessageProducer producer = null;
 	
 	private Topic topic;
     private MessageProducer publisher;
-	
-	//long contador = 0;
+
 	
 	@RequestMapping("/")
-	//String home(@RequestParam(value="pNumero", defaultValue="1") String pNumero) {
-		String home(@RequestParam(value="id", defaultValue="SIN PARAMETRO") String id,
-					@RequestParam(value="size", defaultValue="1") String size,
-					@RequestParam(value="init", defaultValue="1") String init) {
+	String home(@RequestParam(value="id", defaultValue="SIN PARAMETRO") String id,
+				@RequestParam(value="size", defaultValue="1") String size,
+				@RequestParam(value="init", defaultValue="1") String init) {
 		
 		int inicio;
 		int tamanio;
@@ -79,7 +73,6 @@ public class Producer {
 			}
 				
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally{		
@@ -90,7 +83,6 @@ public class Producer {
 
 	
 	private void init() {
-		// TODO Auto-generated method stub
 		
 		conn = ProducerConnection.getConnection();
 		
@@ -98,32 +90,23 @@ public class Producer {
 			// Create a Session
 			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            // Create the destination (Topic or Queue)
-//            Destination destination = session.createQueue("TEST.MECCANO");
-            
-            
             topic = session.createTopic("VirtualTopic.PruebaAlex");
             publisher = session.createProducer(topic);
             publisher.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
-            // Create a MessageProducer from the Session to the Topic or Queue
-//            producer = session.createProducer(destination);
-//            producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-		
 		 }
 	    catch (Exception e) {
         System.out.println("Init Caught: " + e);
         e.printStackTrace();
- 
-    }
+	    }
 	}
 
 
 	/*******************************************
 	 * MAIN                                    *
 	 * @param args                             *
-	 * @throws Exception  
-	 * @author pedro.alonso.garcia                     *
+	 * @throws Exception                       *
+	 * @author pedro.alonso.garcia             *
 	 ******************************************/
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Producer.class, args);
@@ -148,10 +131,8 @@ public class Producer {
                 
             String logMessage = "@@@ "+ idMessage + " @@@ -- Sent message: "+ text;
  
-            // Tell the producer to send the message
             System.out.println(logMessage);
             
-//            producer.send(message);
             publisher.send(message);
              
         }
@@ -161,7 +142,5 @@ public class Producer {
            
         }
     }
-	    
-	 
 	   
 }
